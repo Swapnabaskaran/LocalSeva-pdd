@@ -34,9 +34,9 @@ jobs:
       # Continue on error so we still generate the report even if some tests fail
       continue-on-error: true
 
-    - name: Upload Mochawesome Report
+    - name: Upload Excel Report
       uses: actions/upload-artifact@v4
       with:
-        name: mochawesome-html-report
-        path: mobile-e2e-framework/mochawesome-report/
+        name: e2e-excel-report
+        path: mobile-e2e-framework/reports/
         retention-days: 14
