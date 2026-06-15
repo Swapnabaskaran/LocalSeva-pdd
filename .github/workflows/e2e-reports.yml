@@ -26,11 +26,11 @@ jobs:
         cache-dependency-path: mobile-e2e-framework/package-lock.json
 
     - name: Install Dependencies
-      run: npm ci
+      run: npm install
 
     - name: Run E2E Tests (Mock Driver)
       # We use test:mock for faster CI runs without booting a full Android emulator
-      run: npm run test:mock
+      run: npm run test:mock -- --reporter mochawesome
       # Continue on error so we still generate the report even if some tests fail
       continue-on-error: true
 
