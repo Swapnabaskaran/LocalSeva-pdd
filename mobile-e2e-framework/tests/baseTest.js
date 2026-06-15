@@ -18,6 +18,7 @@ before(async function () {
 beforeEach(async function () {
     driver = await DriverFactory.initDriver();
     global.driver = driver;
+    global.currentTestName = this.currentTest.title;
     totalTests++;
 });
 

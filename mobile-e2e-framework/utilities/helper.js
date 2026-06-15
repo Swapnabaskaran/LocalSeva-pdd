@@ -1,31 +1,105 @@
 const fs = require('fs');
 const path = require('path');
 const logger = require('./logger');
+const excelReportGenerator = require('./excelReportGenerator');
 
 class Helper {
     static async waitForElement(driver, locator, timeout = 10000) {
         logger.info(`Waiting for element: ${locator}`);
-        const element = await driver.$(locator);
-        await element.waitForDisplayed({ timeout });
-        return element;
+        try {
+            const element = await driver.$(locator);
+            await element.waitForDisplayed({ timeout });
+            await excelReportGenerator.addExecutionLog({
+                timestamp: new Date().toISOString(),
+                testName: global.currentTestName || 'Unknown Test',
+                step: `Wait for element: ${locator}`,
+                result: 'SUCCESS',
+                remarks: 'Element displayed'
+            });
+            return element;
+        } catch (error) {
+            await excelReportGenerator.addExecutionLog({
+                timestamp: new Date().toISOString(),
+                testName: global.currentTestName || 'Unknown Test',
+                step: `Wait for element: ${locator}`,
+                result: 'FAILED',
+                remarks: error.message
+            });
+            throw error;
+        }
     }
 
     static async click(driver, locator) {
         logger.info(`Clicking element: ${locator}`);
-        const element = await this.waitForElement(driver, locator);
-        await element.click();
+        try {
+            const element = await this.waitForElement(driver, locator);
+            await element.click();
+            await excelReportGenerator.addExecutionLog({
+                timestamp: new Date().toISOString(),
+                testName: global.currentTestName || 'Unknown Test',
+                step: `Click element: ${locator}`,
+                result: 'SUCCESS',
+                remarks: 'Clicked successfully'
+            });
+        } catch (error) {
+            await excelReportGenerator.addExecutionLog({
+                timestamp: new Date().toISOString(),
+                testName: global.currentTestName || 'Unknown Test',
+                step: `Click element: ${locator}`,
+                result: 'FAILED',
+                remarks: error.message
+            });
+            throw error;
+        }
     }
 
     static async setValue(driver, locator, value) {
         logger.info(`Setting value '${value}' for element: ${locator}`);
-        const element = await this.waitForElement(driver, locator);
-        await element.setValue(value);
+        try {
+            const element = await this.waitForElement(driver, locator);
+            await element.setValue(value);
+            await excelReportGenerator.addExecutionLog({
+                timestamp: new Date().toISOString(),
+                testName: global.currentTestName || 'Unknown Test',
+                step: `Set value for element: ${locator}`,
+                result: 'SUCCESS',
+                remarks: `Value set to '${value}'`
+            });
+        } catch (error) {
+            await excelReportGenerator.addExecutionLog({
+                timestamp: new Date().toISOString(),
+                testName: global.currentTestName || 'Unknown Test',
+                step: `Set value for element: ${locator}`,
+                result: 'FAILED',
+                remarks: error.message
+            });
+            throw error;
+        }
     }
 
     static async getText(driver, locator) {
         logger.info(`Getting text from element: ${locator}`);
-        const element = await this.waitForElement(driver, locator);
-        return await element.getText();
+        try {
+            const element = await this.waitForElement(driver, locator);
+            const text = await element.getText();
+            await excelReportGenerator.addExecutionLog({
+                timestamp: new Date().toISOString(),
+                testName: global.currentTestName || 'Unknown Test',
+                step: `Get text from element: ${locator}`,
+                result: 'SUCCESS',
+                remarks: `Text retrieved: '${text}'`
+            });
+            return text;
+        } catch (error) {
+            await excelReportGenerator.addExecutionLog({
+                timestamp: new Date().toISOString(),
+                testName: global.currentTestName || 'Unknown Test',
+                step: `Get text from element: ${locator}`,
+                result: 'FAILED',
+                remarks: error.message
+            });
+            throw error;
+        }
     }
 
     static async takeScreenshot(driver, testName) {
