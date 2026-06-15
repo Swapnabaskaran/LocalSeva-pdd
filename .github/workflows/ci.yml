@@ -1,0 +1,47 @@
+name: LocalSeva CI/CD
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-frontend:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18.x'
+    - name: Install & Build
+      run: |
+        cd local-seva-main/frontend
+        npm install
+        npm run build
+
+  build-backend:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    - name: Install dependencies
+      run: |
+        cd local-seva-main/backend
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+  # Mobile App Build (Expo EAS) could be added here in a real production environment
+  # build-mobile:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: expo/expo-github-action@v8
+  #     with:
+  #       expo-version: latest
+  #       eas-version: latest
+  #       token: ${{ secrets.EXPO_TOKEN }}
+  #   - run: cd local-seva-mobile && npm install && eas build -p android --profile production --non-interactive

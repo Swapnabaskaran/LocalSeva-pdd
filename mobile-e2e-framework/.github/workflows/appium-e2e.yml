@@ -1,0 +1,68 @@
+name: Appium Android E2E Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: macos-latest
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '11'
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./mobile-e2e-framework
+
+      - name: Install Appium & UiAutomator2
+        run: |
+          npm install -g appium@next
+          appium driver install uiautomator2
+
+      - name: Start Appium Server
+        run: appium &
+        
+      - name: Run Android Emulator and Tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 29
+          target: default
+          arch: x86_64
+          profile: Nexus 6
+          script: cd mobile-e2e-framework && npm run test:apk
+
+      - name: Upload Excel Report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: Mobile_E2E_Report
+          path: mobile-e2e-framework/reports/Mobile_E2E_Report.xlsx
+
+      - name: Upload Mochawesome Report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: Mochawesome_HTML_Report
+          path: mobile-e2e-framework/mochawesome-report/
+
+      - name: Upload Screenshots & Logs
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: Failures_Artifacts
+          path: mobile-e2e-framework/reports/failures/
