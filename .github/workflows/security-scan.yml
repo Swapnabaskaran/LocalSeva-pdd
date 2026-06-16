@@ -1,0 +1,42 @@
+name: Security Vulnerability Scan
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  security-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install Dependencies
+      run: |
+        cd testing/security_framework
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run Security Scans
+      continue-on-error: true
+      run: |
+        cd testing/security_framework
+        pytest tests/ -v
+
+    - name: Upload Security Report
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: Security_Vulnerability_Report
+        path: |
+          testing/security_framework/reports/Security_Vulnerability_Report.xlsx
+          testing/security_framework/reports/security_execution.log
+        retention-days: 14
