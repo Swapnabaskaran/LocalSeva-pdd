@@ -6,7 +6,7 @@ EXCEL_REPORTS_DIR = os.path.join(REPORTS_DIR, "excel")
 
 SELENIUM_EXCEL = os.path.join(EXCEL_REPORTS_DIR, "Selenium_Report.xlsx")
 SECURITY_EXCEL = os.path.join(EXCEL_REPORTS_DIR, "Security_Report.xlsx")
-APPIUM_EXCEL = os.path.join(EXCEL_REPORTS_DIR, "Appium_Report.xlsx")
+APPIUM_EXCEL = os.path.join(EXCEL_REPORTS_DIR, "Mobile_E2E_Report_31_Tests.xlsx")
 MASTER_EXCEL = os.path.join(EXCEL_REPORTS_DIR, "Master_Report.xlsx")
 
 # Ensure dirs exist

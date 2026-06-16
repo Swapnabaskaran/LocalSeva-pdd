@@ -66,7 +66,7 @@ jobs:
         continue-on-error: true
         run: |
           # Copy from appium reports folder to unified reports folder
-          cp testing/appium/reports/Appium_Report.xlsx testing/reports/excel/ || true
+          cp testing/appium/reports/Mobile_E2E_Report_31_Tests.xlsx testing/reports/excel/ || true
 
       - name: Generate Master Report
         run: |
