@@ -100,6 +100,8 @@ def generate_report():
     if df_perf.empty:
         df_perf = pd.DataFrame(columns=["Test Name", "Response Time", "Page Load Time", "API Time"])
 
+    os.makedirs(os.path.dirname(REPORT_FILE), exist_ok=True)
+
     with pd.ExcelWriter(REPORT_FILE, engine='openpyxl') as writer:
         df_summary.to_excel(writer, sheet_name='Summary', index=False)
         df_tc.to_excel(writer, sheet_name='Test Cases', index=False)
