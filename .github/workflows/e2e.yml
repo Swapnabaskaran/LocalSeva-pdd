@@ -1,0 +1,61 @@
+name: LocalSeva Playwright E2E Tests
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  playwright-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: |
+          cd testing/playwright_e2e
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          playwright install chromium
+
+      - name: Run Playwright Tests
+        continue-on-error: true
+        run: |
+          cd testing/playwright_e2e
+          python -m pytest tests/
+
+      - name: Generate Excel Report
+        run: |
+          cd testing/playwright_e2e
+          python generate_excel_report.py
+
+      - name: Upload Test Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: Mobile_E2E_Report
+          path: testing/playwright_e2e/reports/excel/Mobile_E2E_Report.xlsx
+          retention-days: 14
+
+      - name: Upload Screenshots
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-screenshots
+          path: testing/playwright_e2e/reports/screenshots/
+          retention-days: 14
+
+      - name: Upload Traces
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-traces
+          path: testing/playwright_e2e/reports/traces/
+          retention-days: 14
