@@ -18,7 +18,14 @@ def generate_master_report():
     
     for category, path in reports:
         if os.path.exists(path):
-            df = pd.read_excel(path)
+            if category == "Appium":
+                try:
+                    df = pd.read_excel(path, sheet_name="Test Cases")
+                except Exception as e:
+                    print(f"Failed to read 'Test Cases' sheet from Appium report: {e}")
+                    df = pd.read_excel(path)
+            else:
+                df = pd.read_excel(path)
             # count status
             passed = len(df[df['Status'] == 'Passed'])
             failed = len(df[df['Status'] == 'Failed'])
