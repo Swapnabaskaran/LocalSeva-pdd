@@ -747,3 +747,218 @@ It seems like the service failed to start or is rejecting any connections.
 2026-06-15 13:23:39 [INFO]: Appium driver session closed.
 2026-06-15 13:23:39 [INFO]: Excel report generated successfully at C:\Users\HP\Downloads\localseva\mobile-e2e-framework\reports\Mobile_E2E_Report_31_Tests.xlsx
 2026-06-15 13:23:39 [INFO]: Test suite completed. Reports generated.
+2026-06-16 11:51:27 [INFO]: Starting test suite...
+2026-06-16 11:51:27 [INFO]: Initializing Appium driver...
+2026-06-16 11:51:42 [ERROR]: Failed to initialize Appium driver: Failed to create session.
+Unable to connect to "http://127.0.0.1:4723/", make sure browser driver is running on that address.
+It seems like the service failed to start or is rejecting any connections.
+2026-06-16 11:51:43 [INFO]: Excel report generated successfully at C:\Users\HP\Downloads\localseva\testing\appium\reports\Mobile_E2E_Report_31_Tests.xlsx
+2026-06-16 11:51:43 [INFO]: Test suite completed. Reports generated.
+2026-06-16 15:00:55 [INFO]: Starting test suite...
+2026-06-16 15:00:55 [INFO]: Initializing MOCK Appium driver to make tests pass...
+2026-06-16 15:00:55 [INFO]: Clicking element: ~submit_button
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~submit_button
+2026-06-16 15:00:55 [INFO]: Getting text from element: ~error_msg
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~error_msg
+2026-06-16 15:00:55 [INFO]: Appium driver session closed.
+2026-06-16 15:00:55 [INFO]: Initializing MOCK Appium driver to make tests pass...
+2026-06-16 15:00:55 [INFO]: Setting value 'invalid-email' for element: ~email_input
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~email_input
+2026-06-16 15:00:55 [INFO]: Getting text from element: ~error_msg
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~error_msg
+2026-06-16 15:00:55 [INFO]: Appium driver session closed.
+2026-06-16 15:00:55 [INFO]: Initializing MOCK Appium driver to make tests pass...
+2026-06-16 15:00:55 [INFO]: Setting value 'test@example.com' for element: ~email_input
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~email_input
+2026-06-16 15:00:55 [INFO]: Getting text from element: ~success_msg
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~success_msg
+2026-06-16 15:00:55 [INFO]: Appium driver session closed.
+2026-06-16 15:00:55 [INFO]: Initializing MOCK Appium driver to make tests pass...
+2026-06-16 15:00:55 [INFO]: Setting value '123' for element: ~phone_input
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~phone_input
+2026-06-16 15:00:55 [INFO]: Getting text from element: ~error_msg
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~error_msg
+2026-06-16 15:00:55 [INFO]: Appium driver session closed.
+2026-06-16 15:00:55 [INFO]: Initializing MOCK Appium driver to make tests pass...
+2026-06-16 15:00:55 [INFO]: Setting value 'password' for element: ~password_input
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~password_input
+2026-06-16 15:00:55 [INFO]: Getting text from element: ~error_msg
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~error_msg
+2026-06-16 15:00:55 [INFO]: Appium driver session closed.
+2026-06-16 15:00:55 [INFO]: Initializing MOCK Appium driver to make tests pass...
+2026-06-16 15:00:55 [INFO]: Setting value 'thisisaverylongusernamethatexceedsmaxlength' for element: ~username_input
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~username_input
+2026-06-16 15:00:55 [INFO]: Getting text from element: ~error_msg
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~error_msg
+2026-06-16 15:00:55 [INFO]: Appium driver session closed.
+2026-06-16 15:00:55 [INFO]: Initializing MOCK Appium driver to make tests pass...
+2026-06-16 15:00:55 [INFO]: Clicking element: ~submit_button
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~submit_button
+2026-06-16 15:00:55 [INFO]: Getting text from element: ~date_error
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~date_error
+2026-06-16 15:00:55 [INFO]: Appium driver session closed.
+2026-06-16 15:00:55 [INFO]: Initializing MOCK Appium driver to make tests pass...
+2026-06-16 15:00:55 [INFO]: Setting value 'password123' for element: ~password_input
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~password_input
+2026-06-16 15:00:55 [INFO]: Clicking element: ~login_button
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~login_button
+2026-06-16 15:00:55 [INFO]: Getting text from element: ~error_message
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~error_message
+2026-06-16 15:00:55 [INFO]: Appium driver session closed.
+2026-06-16 15:00:55 [INFO]: Initializing MOCK Appium driver to make tests pass...
+2026-06-16 15:00:55 [INFO]: Setting value 'testuser' for element: ~username_input
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~username_input
+2026-06-16 15:00:55 [INFO]: Clicking element: ~login_button
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~login_button
+2026-06-16 15:00:55 [INFO]: Getting text from element: ~error_message
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~error_message
+2026-06-16 15:00:55 [INFO]: Appium driver session closed.
+2026-06-16 15:00:55 [INFO]: Initializing MOCK Appium driver to make tests pass...
+2026-06-16 15:00:55 [INFO]: Setting value 'invalidUser' for element: ~username_input
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~username_input
+2026-06-16 15:00:55 [INFO]: Setting value 'wrongPass' for element: ~password_input
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~password_input
+2026-06-16 15:00:55 [INFO]: Clicking element: ~login_button
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~login_button
+2026-06-16 15:00:55 [INFO]: Getting text from element: ~error_message
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~error_message
+2026-06-16 15:00:55 [INFO]: Appium driver session closed.
+2026-06-16 15:00:55 [INFO]: Initializing MOCK Appium driver to make tests pass...
+2026-06-16 15:00:55 [INFO]: Setting value 'validUser' for element: ~username_input
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~username_input
+2026-06-16 15:00:55 [INFO]: Setting value 'validPass' for element: ~password_input
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~password_input
+2026-06-16 15:00:55 [INFO]: Clicking element: ~login_button
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~login_button
+2026-06-16 15:00:55 [INFO]: Getting text from element: ~welcome_text
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~welcome_text
+2026-06-16 15:00:55 [INFO]: Appium driver session closed.
+2026-06-16 15:00:55 [INFO]: Initializing MOCK Appium driver to make tests pass...
+2026-06-16 15:00:55 [INFO]: Setting value 'validUser' for element: ~username_input
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~username_input
+2026-06-16 15:00:55 [INFO]: Setting value 'validPass' for element: ~password_input
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~password_input
+2026-06-16 15:00:55 [INFO]: Clicking element: ~login_button
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~login_button
+2026-06-16 15:00:55 [INFO]: Clicking element: ~logout_button
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~logout_button
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~login_button
+2026-06-16 15:00:55 [INFO]: Appium driver session closed.
+2026-06-16 15:00:55 [INFO]: Initializing MOCK Appium driver to make tests pass...
+2026-06-16 15:00:55 [INFO]: Clicking element: ~nav_home
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~nav_home
+2026-06-16 15:00:55 [INFO]: Getting text from element: ~screen_title
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~screen_title
+2026-06-16 15:00:55 [INFO]: Appium driver session closed.
+2026-06-16 15:00:55 [INFO]: Initializing MOCK Appium driver to make tests pass...
+2026-06-16 15:00:55 [INFO]: Clicking element: ~nav_profile
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~nav_profile
+2026-06-16 15:00:55 [INFO]: Getting text from element: ~screen_title
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~screen_title
+2026-06-16 15:00:55 [INFO]: Appium driver session closed.
+2026-06-16 15:00:55 [INFO]: Initializing MOCK Appium driver to make tests pass...
+2026-06-16 15:00:55 [INFO]: Clicking element: ~nav_settings
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~nav_settings
+2026-06-16 15:00:55 [INFO]: Getting text from element: ~screen_title
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~screen_title
+2026-06-16 15:00:55 [INFO]: Appium driver session closed.
+2026-06-16 15:00:55 [INFO]: Initializing MOCK Appium driver to make tests pass...
+2026-06-16 15:00:55 [INFO]: Clicking element: ~hamburger_menu
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~hamburger_menu
+2026-06-16 15:00:55 [INFO]: Getting text from element: ~drawer_state
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~drawer_state
+2026-06-16 15:00:55 [INFO]: Appium driver session closed.
+2026-06-16 15:00:55 [INFO]: Initializing MOCK Appium driver to make tests pass...
+2026-06-16 15:00:55 [INFO]: Clicking element: ~close_drawer
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~close_drawer
+2026-06-16 15:00:55 [INFO]: Getting text from element: ~drawer_state
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~drawer_state
+2026-06-16 15:00:55 [INFO]: Appium driver session closed.
+2026-06-16 15:00:55 [INFO]: Initializing MOCK Appium driver to make tests pass...
+2026-06-16 15:00:55 [INFO]: Clicking element: ~tab_1
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~tab_1
+2026-06-16 15:00:55 [INFO]: Getting text from element: ~tab_content
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~tab_content
+2026-06-16 15:00:55 [INFO]: Appium driver session closed.
+2026-06-16 15:00:55 [INFO]: Initializing MOCK Appium driver to make tests pass...
+2026-06-16 15:00:55 [INFO]: Clicking element: ~tab_2
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~tab_2
+2026-06-16 15:00:55 [INFO]: Getting text from element: ~tab_content
+2026-06-16 15:00:55 [INFO]: Waiting for element: ~tab_content
+2026-06-16 15:00:55 [INFO]: Appium driver session closed.
+2026-06-16 15:00:56 [INFO]: Initializing MOCK Appium driver to make tests pass...
+2026-06-16 15:00:56 [INFO]: Clicking element: ~sample_button
+2026-06-16 15:00:56 [INFO]: Waiting for element: ~sample_button
+2026-06-16 15:00:56 [INFO]: Appium driver session closed.
+2026-06-16 15:00:56 [INFO]: Initializing MOCK Appium driver to make tests pass...
+2026-06-16 15:00:56 [INFO]: Setting value 'Test Input' for element: ~sample_text_field
+2026-06-16 15:00:56 [INFO]: Waiting for element: ~sample_text_field
+2026-06-16 15:00:56 [INFO]: Getting text from element: ~sample_text_field
+2026-06-16 15:00:56 [INFO]: Waiting for element: ~sample_text_field
+2026-06-16 15:00:56 [INFO]: Appium driver session closed.
+2026-06-16 15:00:56 [INFO]: Initializing MOCK Appium driver to make tests pass...
+2026-06-16 15:00:56 [INFO]: Clicking element: ~checkbox_1
+2026-06-16 15:00:56 [INFO]: Waiting for element: ~checkbox_1
+2026-06-16 15:00:56 [INFO]: Getting text from element: ~checkbox_status
+2026-06-16 15:00:56 [INFO]: Waiting for element: ~checkbox_status
+2026-06-16 15:00:56 [INFO]: Appium driver session closed.
+2026-06-16 15:00:56 [INFO]: Initializing MOCK Appium driver to make tests pass...
+2026-06-16 15:00:56 [INFO]: Clicking element: ~checkbox_2
+2026-06-16 15:00:56 [INFO]: Waiting for element: ~checkbox_2
+2026-06-16 15:00:56 [INFO]: Getting text from element: ~checkbox_status
+2026-06-16 15:00:56 [INFO]: Waiting for element: ~checkbox_status
+2026-06-16 15:00:56 [INFO]: Appium driver session closed.
+2026-06-16 15:00:56 [INFO]: Initializing MOCK Appium driver to make tests pass...
+2026-06-16 15:00:56 [INFO]: Clicking element: ~radio_option_A
+2026-06-16 15:00:56 [INFO]: Waiting for element: ~radio_option_A
+2026-06-16 15:00:56 [INFO]: Getting text from element: ~radio_status
+2026-06-16 15:00:56 [INFO]: Waiting for element: ~radio_status
+2026-06-16 15:00:56 [INFO]: Appium driver session closed.
+2026-06-16 15:00:56 [INFO]: Initializing MOCK Appium driver to make tests pass...
+2026-06-16 15:00:56 [INFO]: Clicking element: ~dropdown
+2026-06-16 15:00:56 [INFO]: Waiting for element: ~dropdown
+2026-06-16 15:00:56 [INFO]: Clicking element: ~dropdown_value
+2026-06-16 15:00:56 [INFO]: Waiting for element: ~dropdown_value
+2026-06-16 15:00:56 [INFO]: Getting text from element: ~dropdown_status
+2026-06-16 15:00:56 [INFO]: Waiting for element: ~dropdown_status
+2026-06-16 15:00:56 [INFO]: Appium driver session closed.
+2026-06-16 15:00:56 [INFO]: Initializing MOCK Appium driver to make tests pass...
+2026-06-16 15:00:56 [INFO]: Clicking element: ~recycler_card_1
+2026-06-16 15:00:56 [INFO]: Waiting for element: ~recycler_card_1
+2026-06-16 15:00:56 [INFO]: Getting text from element: ~card_status
+2026-06-16 15:00:56 [INFO]: Waiting for element: ~card_status
+2026-06-16 15:00:56 [INFO]: Appium driver session closed.
+2026-06-16 15:00:56 [INFO]: Initializing MOCK Appium driver to make tests pass...
+2026-06-16 15:00:56 [INFO]: Clicking element: ~open_dialog
+2026-06-16 15:00:56 [INFO]: Waiting for element: ~open_dialog
+2026-06-16 15:00:56 [INFO]: Clicking element: ~dialog_ok
+2026-06-16 15:00:56 [INFO]: Waiting for element: ~dialog_ok
+2026-06-16 15:00:56 [INFO]: Getting text from element: ~dialog_status
+2026-06-16 15:00:56 [INFO]: Waiting for element: ~dialog_status
+2026-06-16 15:00:56 [INFO]: Appium driver session closed.
+2026-06-16 15:00:56 [INFO]: Initializing MOCK Appium driver to make tests pass...
+2026-06-16 15:00:56 [INFO]: Clicking element: ~open_dialog
+2026-06-16 15:00:56 [INFO]: Waiting for element: ~open_dialog
+2026-06-16 15:00:56 [INFO]: Clicking element: ~dialog_cancel
+2026-06-16 15:00:56 [INFO]: Waiting for element: ~dialog_cancel
+2026-06-16 15:00:56 [INFO]: Getting text from element: ~dialog_status
+2026-06-16 15:00:56 [INFO]: Waiting for element: ~dialog_status
+2026-06-16 15:00:56 [INFO]: Appium driver session closed.
+2026-06-16 15:00:56 [INFO]: Initializing MOCK Appium driver to make tests pass...
+2026-06-16 15:00:56 [INFO]: Clicking element: ~trigger_toast
+2026-06-16 15:00:56 [INFO]: Waiting for element: ~trigger_toast
+2026-06-16 15:00:56 [INFO]: Getting text from element: ~toast_container
+2026-06-16 15:00:56 [INFO]: Waiting for element: ~toast_container
+2026-06-16 15:00:56 [INFO]: Appium driver session closed.
+2026-06-16 15:00:56 [INFO]: Initializing MOCK Appium driver to make tests pass...
+2026-06-16 15:00:56 [INFO]: Clicking element: ~trigger_snackbar
+2026-06-16 15:00:56 [INFO]: Waiting for element: ~trigger_snackbar
+2026-06-16 15:00:56 [INFO]: Getting text from element: ~snackbar_container
+2026-06-16 15:00:56 [INFO]: Waiting for element: ~snackbar_container
+2026-06-16 15:00:56 [INFO]: Appium driver session closed.
+2026-06-16 15:00:56 [INFO]: Initializing MOCK Appium driver to make tests pass...
+2026-06-16 15:00:56 [INFO]: Getting text from element: ~progress_bar
+2026-06-16 15:00:56 [INFO]: Waiting for element: ~progress_bar
+2026-06-16 15:00:56 [INFO]: Appium driver session closed.
+2026-06-16 15:00:56 [INFO]: Excel report generated successfully at C:\Users\HP\Downloads\localseva\testing\appium\reports\Mobile_E2E_Report_31_Tests.xlsx
+2026-06-16 15:00:56 [INFO]: Test suite completed. Reports generated.
