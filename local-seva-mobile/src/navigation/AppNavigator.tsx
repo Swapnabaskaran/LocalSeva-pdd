@@ -18,6 +18,11 @@ import MapTrackingScreen from '../screens/MapTrackingScreen';
 import WorkerDashboardScreen from '../screens/WorkerDashboardScreen';
 import KYCUploadScreen from '../screens/KYCUploadScreen';
 import JobActiveScreen from '../screens/JobActiveScreen';
+import WorkerEarningsScreen from '../screens/WorkerEarningsScreen';
+import WorkerScheduleScreen from '../screens/WorkerScheduleScreen';
+import WorkerCatalogScreen from '../screens/WorkerCatalogScreen';
+import WorkerReviewsScreen from '../screens/WorkerReviewsScreen';
+import WorkerTrainingScreen from '../screens/WorkerTrainingScreen';
 
 // Auth Screen
 import LoginScreen from '../screens/LoginScreen';
@@ -93,6 +98,11 @@ export default function AppNavigator() {
             <Stack.Screen name="WorkerTabs" component={WorkerTabs} />
             <Stack.Screen name="KYCUpload" component={KYCUploadScreen} />
             <Stack.Screen name="JobActive" component={JobActiveScreen} />
+            <Stack.Screen name="WorkerEarnings" component={WorkerEarningsScreen} />
+            <Stack.Screen name="WorkerSchedule" component={WorkerScheduleScreen} />
+            <Stack.Screen name="WorkerCatalog" component={WorkerCatalogScreen} />
+            <Stack.Screen name="WorkerReviews" component={WorkerReviewsScreen} />
+            <Stack.Screen name="WorkerTraining" component={WorkerTrainingScreen} />
             {/* Common Authenticated Screens */}
             <Stack.Screen name="Settings" component={SettingsScreen} />
             <Stack.Screen name="Notifications" component={NotificationsScreen} />

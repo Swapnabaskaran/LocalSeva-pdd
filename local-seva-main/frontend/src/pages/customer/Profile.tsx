@@ -228,6 +228,30 @@ export const ProfilePage: React.FC = () => {
             )}
           </div>
 
+          <div className="pt-4 border-t border-slate-100 dark:border-slate-800 space-y-2">
+            <h6 className="text-[10px] font-black text-slate-400 uppercase tracking-widest text-left mb-2">Preferences</h6>
+            <button onClick={() => navigate('/settings')} className="w-full p-3 bg-slate-50 dark:bg-slate-800 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-100 transition flex justify-between">
+              Settings <span>→</span>
+            </button>
+            <button onClick={() => navigate('/notifications')} className="w-full p-3 bg-slate-50 dark:bg-slate-800 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-100 transition flex justify-between">
+              Notifications <span>→</span>
+            </button>
+            <button onClick={() => navigate('/payments')} className="w-full p-3 bg-slate-50 dark:bg-slate-800 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-100 transition flex justify-between">
+              Payment Methods <span>→</span>
+            </button>
+            <button onClick={() => navigate('/reviews')} className="w-full p-3 bg-slate-50 dark:bg-slate-800 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-100 transition flex justify-between">
+              My Reviews <span>→</span>
+            </button>
+            
+            <h6 className="text-[10px] font-black text-slate-400 uppercase tracking-widest text-left mb-2 mt-4">Support</h6>
+            <button onClick={() => navigate('/help')} className="w-full p-3 bg-slate-50 dark:bg-slate-800 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-100 transition flex justify-between">
+              Help & Support <span>→</span>
+            </button>
+            <button onClick={() => navigate('/chat')} className="w-full p-3 bg-slate-50 dark:bg-slate-800 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-100 transition flex justify-between">
+              Messages / Chat <span>→</span>
+            </button>
+          </div>
+
           <button
             onClick={() => { logout(); navigate('/login'); }}
             className="w-full py-2.5 bg-red-50 text-red-600 rounded-xl text-xs font-bold hover:bg-red-100 transition-colors"

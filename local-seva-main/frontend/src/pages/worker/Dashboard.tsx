@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useAuthStore } from '../../stores/authStore';
 import { socketService } from '../../services/socket';
+import { useNavigate } from 'react-router-dom';
 import { 
   Sparkles, Award, Wallet, Calendar, Check, X, MapPin, 
-  Clock, ShieldCheck, TrendingUp, Compass, KeyRound
+  Clock, ShieldCheck, TrendingUp, Compass, KeyRound, DollarSign, BookOpen, Star, List
 } from 'lucide-react';
 import apiClient from '../../services/api';
 
 export const WorkerDashboard: React.FC = () => {
   const { user, updateUser } = useAuthStore();
+  const navigate = useNavigate();
   const [stats, setStats] = useState<any>(null);
   const [incomingJobs, setIncomingJobs] = useState<any[]>([]);
   const [activeJob, setActiveJob] = useState<any>(null);
@@ -181,6 +183,59 @@ export const WorkerDashboard: React.FC = () => {
           <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest block">XP MULTIPLIER</span>
           <h4 className="text-lg font-black text-slate-800 dark:text-white">1.0x Base</h4>
         </div>
+      </div>
+
+      {/* NEW ACTION CENTER NAVIGATION GRID */}
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+        <button 
+          onClick={() => navigate('/worker/earnings')}
+          className="p-4 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm flex flex-col items-center justify-center hover:bg-slate-50 transition"
+        >
+          <div className="w-10 h-10 bg-emerald-50 dark:bg-emerald-900/30 rounded-full flex items-center justify-center mb-2">
+            <DollarSign className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+          </div>
+          <span className="text-xs font-bold text-slate-700 dark:text-slate-300">Earnings</span>
+        </button>
+
+        <button 
+          onClick={() => navigate('/worker/schedule')}
+          className="p-4 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm flex flex-col items-center justify-center hover:bg-slate-50 transition"
+        >
+          <div className="w-10 h-10 bg-blue-50 dark:bg-blue-900/30 rounded-full flex items-center justify-center mb-2">
+            <Calendar className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+          </div>
+          <span className="text-xs font-bold text-slate-700 dark:text-slate-300">Schedule</span>
+        </button>
+
+        <button 
+          onClick={() => navigate('/worker/catalog')}
+          className="p-4 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm flex flex-col items-center justify-center hover:bg-slate-50 transition"
+        >
+          <div className="w-10 h-10 bg-purple-50 dark:bg-purple-900/30 rounded-full flex items-center justify-center mb-2">
+            <List className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+          </div>
+          <span className="text-xs font-bold text-slate-700 dark:text-slate-300">Catalog</span>
+        </button>
+
+        <button 
+          onClick={() => navigate('/worker/reviews')}
+          className="p-4 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm flex flex-col items-center justify-center hover:bg-slate-50 transition"
+        >
+          <div className="w-10 h-10 bg-amber-50 dark:bg-amber-900/30 rounded-full flex items-center justify-center mb-2">
+            <Star className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+          </div>
+          <span className="text-xs font-bold text-slate-700 dark:text-slate-300">Reviews</span>
+        </button>
+
+        <button 
+          onClick={() => navigate('/worker/training')}
+          className="p-4 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm flex flex-col items-center justify-center hover:bg-slate-50 transition"
+        >
+          <div className="w-10 h-10 bg-pink-50 dark:bg-pink-900/30 rounded-full flex items-center justify-center mb-2">
+            <BookOpen className="w-5 h-5 text-pink-600 dark:text-pink-400" />
+          </div>
+          <span className="text-xs font-bold text-slate-700 dark:text-slate-300">Training</span>
+        </button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

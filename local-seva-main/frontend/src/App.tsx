@@ -18,6 +18,21 @@ import { ProfilePage } from './pages/customer/Profile';
 import { WorkerDashboard } from './pages/worker/Dashboard';
 import { AdminDashboard } from './pages/admin/Dashboard';
 
+// Common Screens
+import { Settings } from './pages/common/Settings';
+import { Notifications } from './pages/common/Notifications';
+import { HelpSupport } from './pages/common/HelpSupport';
+import { PaymentMethods } from './pages/common/PaymentMethods';
+import { ReviewsRatings } from './pages/common/ReviewsRatings';
+import { Chat } from './pages/common/Chat';
+
+// Worker Dashboard Expansion Screens
+import { Earnings } from './pages/worker/Earnings';
+import { Schedule } from './pages/worker/Schedule';
+import { Catalog } from './pages/worker/Catalog';
+import { Reviews } from './pages/worker/Reviews';
+import { Training } from './pages/worker/Training';
+
 // 1. Protected Route Wrapper Scoping Roles
 const ProtectedRoute: React.FC<{ children: React.ReactNode; allowedRoles?: string[] }> = ({ children, allowedRoles }) => {
   const { isAuthenticated, user, token } = useAuthStore();
@@ -113,6 +128,14 @@ export const App: React.FC = () => {
               } 
             />
 
+            {/* COMMON PROTECTED ROUTES */}
+            <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+            <Route path="/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
+            <Route path="/help" element={<ProtectedRoute><HelpSupport /></ProtectedRoute>} />
+            <Route path="/payments" element={<ProtectedRoute><PaymentMethods /></ProtectedRoute>} />
+            <Route path="/reviews" element={<ProtectedRoute><ReviewsRatings /></ProtectedRoute>} />
+            <Route path="/chat" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
+
             {/* WORKER DASHBOARD CONTROLLER */}
             <Route 
               path="/worker" 
@@ -122,6 +145,11 @@ export const App: React.FC = () => {
                 </ProtectedRoute>
               } 
             />
+            <Route path="/worker/earnings" element={<ProtectedRoute allowedRoles={['worker']}><Earnings /></ProtectedRoute>} />
+            <Route path="/worker/schedule" element={<ProtectedRoute allowedRoles={['worker']}><Schedule /></ProtectedRoute>} />
+            <Route path="/worker/catalog" element={<ProtectedRoute allowedRoles={['worker']}><Catalog /></ProtectedRoute>} />
+            <Route path="/worker/reviews" element={<ProtectedRoute allowedRoles={['worker']}><Reviews /></ProtectedRoute>} />
+            <Route path="/worker/training" element={<ProtectedRoute allowedRoles={['worker']}><Training /></ProtectedRoute>} />
 
             {/* ADMINISTRATIVE COMMAND PORTAL */}
             <Route 
