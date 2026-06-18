@@ -1,5 +1,6 @@
 import http from 'k6/http';
 import { check, sleep } from 'k6';
+import { textSummary } from 'https://jslib.k6.io/k6-summary/0.0.1/index.js';
 
 // Configuration for Baseline / Load Testing
 export const options = {
@@ -33,4 +34,11 @@ export default function () {
   // Short pause between iterations to simulate real user think time
   // Sleep 1 second ensures we aren't just DDOS'ing, but simulating sustained active users
   sleep(1);
+}
+
+export function handleSummary(data) {
+  return {
+    'reports/k6_summary.json': JSON.stringify(data), // export the default JSON summary
+    'stdout': textSummary(data, { indent: ' ', enableColors: true }), // also print it
+  };
 }
