@@ -22,6 +22,14 @@ import JobActiveScreen from '../screens/JobActiveScreen';
 // Auth Screen
 import LoginScreen from '../screens/LoginScreen';
 
+// Common/Shared New Screens
+import SettingsScreen from '../screens/SettingsScreen';
+import NotificationsScreen from '../screens/NotificationsScreen';
+import HelpSupportScreen from '../screens/HelpSupportScreen';
+import PaymentMethodsScreen from '../screens/PaymentMethodsScreen';
+import ReviewsRatingsScreen from '../screens/ReviewsRatingsScreen';
+import ChatScreen from '../screens/ChatScreen';
+
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -85,12 +93,26 @@ export default function AppNavigator() {
             <Stack.Screen name="WorkerTabs" component={WorkerTabs} />
             <Stack.Screen name="KYCUpload" component={KYCUploadScreen} />
             <Stack.Screen name="JobActive" component={JobActiveScreen} />
+            {/* Common Authenticated Screens */}
+            <Stack.Screen name="Settings" component={SettingsScreen} />
+            <Stack.Screen name="Notifications" component={NotificationsScreen} />
+            <Stack.Screen name="HelpSupport" component={HelpSupportScreen} />
+            <Stack.Screen name="PaymentMethods" component={PaymentMethodsScreen} />
+            <Stack.Screen name="ReviewsRatings" component={ReviewsRatingsScreen} />
+            <Stack.Screen name="Chat" component={ChatScreen} />
           </>
         ) : (
           <>
             <Stack.Screen name="CustomerTabs" component={CustomerTabs} />
             <Stack.Screen name="ServiceDetail" component={ServiceDetailScreen} />
             <Stack.Screen name="MapTracking" component={MapTrackingScreen} />
+            {/* Common Authenticated Screens */}
+            <Stack.Screen name="Settings" component={SettingsScreen} />
+            <Stack.Screen name="Notifications" component={NotificationsScreen} />
+            <Stack.Screen name="HelpSupport" component={HelpSupportScreen} />
+            <Stack.Screen name="PaymentMethods" component={PaymentMethodsScreen} />
+            <Stack.Screen name="ReviewsRatings" component={ReviewsRatingsScreen} />
+            <Stack.Screen name="Chat" component={ChatScreen} />
           </>
         )}
       </Stack.Navigator>
