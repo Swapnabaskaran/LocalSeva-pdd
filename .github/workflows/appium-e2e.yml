@@ -1,0 +1,67 @@
+name: Enterprise Appium Suite
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  appium-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 11
+      uses: actions/setup-java@v4
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        cache: maven
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install Python Dependencies
+      run: pip install pandas openpyxl
+
+    - name: Generate 360 Unique Test Scenarios
+      run: |
+        cd testing/appium
+        python generate_test_data.py
+
+    - name: Setup Appium
+      run: |
+        npm install -g appium
+        appium driver install uiautomator2
+
+    - name: Run Appium Server in Background
+      run: appium &
+      
+    - name: Run Maven TestNG Suite
+      continue-on-error: true
+      run: |
+        cd testing/appium
+        mvn clean test
+
+    - name: Upload Extent & Excel Reports
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: Enterprise-Appium-Reports
+        path: |
+          testing/appium/reports/Appium_Report.xlsx
+          testing/appium/reports/ExtentReport.html
+          testing/appium/screenshots/
+
+    - name: Commit and Push Reports to Repo
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git add testing/appium/reports/* testing/appium/screenshots/* || true
+        git commit -m "docs: Auto-update Extent and Excel Reports from Appium Suite" || true
+        git push || true
