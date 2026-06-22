@@ -160,15 +160,40 @@ async def register_with_email(payload: UserRegister):
 async def login_with_email(payload: UserLogin):
     """
     Simulates / validates signin token matching for local Firestore user verification.
-    In production, frontend authenticates directly via Firebase SDK and passes Bearer token.
+    Added Auto-Registration Bypass: If email doesn't exist, it auto-creates a profile for seamless testing.
     """
     email = payload.email
     users_ref = db.collection("users").where("email", "==", email).limit(1).get()
     
     if len(users_ref) == 0:
-        raise HTTPException(status_code=404, detail="No registered account matched this email address.")
+        # AUTO-REGISTER BYPASS FOR TESTING
+        new_uid = f"usr_{random.randint(100000,999999)}"
+        role = "worker" if "worker" in email.lower() else "customer"
         
-    user_data = users_ref[0].to_dict()
+        user_data = {
+            "uid": new_uid,
+            "email": email,
+            "phone": "",
+            "name": email.split("@")[0].capitalize(),
+            "photoURL": f"https://api.dicebear.com/7.x/miniavs/svg?seed={new_uid}",
+            "role": role,
+            "createdAt": datetime.datetime.now(datetime.timezone.utc),
+            "updatedAt": datetime.datetime.now(datetime.timezone.utc),
+            "isActive": True,
+            "walletBalance": 100.0,
+            "loyaltyPoints": 0,
+            "subscriptionPlan": "Free",
+            "savedAddresses": [],
+            "rating": 5.0,
+            "level": "Pro",
+            "xpPoints": 500,
+            "totalJobsCompleted": 0
+        }
+        db.collection("users").document(new_uid).set(user_data)
+        logger.info(f"Auto-registered missing user {email} for demo purposes.")
+    else:
+        user_data = users_ref[0].to_dict()
+
     if not user_data.get("isActive", True):
         raise HTTPException(status_code=403, detail="Account has been suspended by an administrator.")
         
