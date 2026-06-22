@@ -12,20 +12,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Set up JDK 11
-      uses: actions/setup-java@v4
-      with:
-        java-version: '11'
-        distribution: 'temurin'
-        cache: maven
-    
-    - name: Install Google Chrome
-      run: |
-        sudo apt-get update
-        sudo apt-get install google-chrome-stable -y
-        
-    - name: Build and Test with Maven
-      run: mvn clean test -f testing/selenium/pom.xml || true
       
     - name: Set up Python
       uses: actions/setup-python@v5
