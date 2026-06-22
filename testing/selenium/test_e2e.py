@@ -3,16 +3,19 @@ import os
 import time
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
 import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from utils.logger import setup_logger
 from utils.reporter import Reporter
+from pages.auth_page import AuthPage
+from pages.customer_page import CustomerPage
+from pages.base_page import BasePage
 
 logger = setup_logger("Selenium_E2E", "testing/selenium/logs")
 reporter = Reporter("Selenium", "testing/selenium")
 
-# Generate 300 test data sets dynamically
-# Modules matching the user's requirements
+# 21 Modules from Prompt
 modules = [
     "User Registration", "User Login", "Service Search", "Service Categories",
     "Service Details", "Service Booking", "Booking Reschedule", "Booking Cancellation",
@@ -24,77 +27,80 @@ modules = [
 test_data = []
 for i in range(1, 301):
     module = modules[i % len(modules)]
-    # We need exactly 2 intentional failures. We will make test 150 and 250 fail.
+    # Exactly 2 intentional failures as requested
     expected_status = "Failed" if i in [150, 250] else "Passed"
-    test_data.append((f"TC_E2E_{i:03d}", module, f"Verify functionality of {module} - Scenario {i}", expected_status))
-
+    test_data.append((f"TC_E2E_{i:03d}", module, f"Automated UI interaction for {module}", expected_status, i))
 
 @pytest.fixture(scope="module")
 def driver():
-    """Setup headless Chrome webdriver."""
-    logger.info("Initializing Selenium WebDriver in headless mode.")
+    """Setup real Chrome webdriver."""
+    logger.info("Initializing Real Selenium WebDriver")
     chrome_options = Options()
     chrome_options.add_argument("--headless")
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument("--window-size=1920,1080")
     
-    # In a real scenario, webdriver-manager would download the driver automatically
-    # For CI/CD, headless is required
     driver = webdriver.Chrome(options=chrome_options)
-    driver.implicitly_wait(5)
+    driver.implicitly_wait(2) # Short wait for faster execution of 300 tests
     yield driver
     logger.info("Closing Selenium WebDriver.")
     driver.quit()
-    # Save the reporter at the end of the suite
     reporter.save()
 
-@pytest.mark.parametrize("test_id, module, desc, expected_status", test_data)
-def test_localseva_e2e(driver, test_id, module, desc, expected_status):
+@pytest.mark.parametrize("test_id, module, desc, expected_status, iteration", test_data)
+def test_localseva_e2e_real_ui(driver, test_id, module, desc, expected_status, iteration):
     """
-    Data-driven test executing 300 comprehensive scenarios.
+    Data-driven test executing 300 real browser interactions using POM.
     """
     start_time = time.time()
     logger.info(f"Executing: {test_id} - {module}")
-    
     actual_status = "Passed"
     screenshot_path = ""
     
+    auth_page = AuthPage(driver)
+    customer_page = CustomerPage(driver)
+    base_page = BasePage(driver)
+
     try:
-        # Mocking actual page interactions to avoid 300 identical web hits
-        # In a real implementation, this would route to specific Page Object functions
-        # e.g., if module == "User Login": LoginPage(driver).login("user", "pass")
-        
-        # Simulate logic evaluation
-        if expected_status == "Failed":
-            # Simulate a failure condition
-            raise AssertionError(f"Intentional failure injected for {test_id}")
+        # Route the module to actual Selenium interaction logic
+        if module == "User Login":
+            auth_page.login(f"user{iteration}@test.com", "password123")
+        elif module == "User Registration":
+            auth_page.register(f"Test User {iteration}", f"new{iteration}@test.com", "pass")
+        elif module == "Service Search":
+            customer_page.search_service("plumber")
+        elif module == "Service Booking":
+            customer_page.book_service()
+        elif module == "Wallet":
+            customer_page.view_wallet()
+        elif module == "Favorites":
+            customer_page.add_favorite()
+        else:
+            # Generic navigation interaction for other modules
+            path = "/" + module.lower().replace(" & ", "-").replace(" ", "-")
+            customer_page.execute_generic_module(path)
             
+        # Intentional Failure Injection
+        if expected_status == "Failed":
+            logger.info("Injecting intentional failure (invalid locator)...")
+            base_page.click((By.ID, "this-element-does-not-exist"))
+
     except Exception as e:
         actual_status = "Failed"
         logger.error(f"{test_id} Failed: {str(e)}")
         
-        # Capture screenshot on failure
+        # Real Selenium Screenshot Capture
         screenshots_dir = os.path.join(os.path.dirname(__file__), "screenshots")
         screenshot_path = os.path.join(screenshots_dir, f"{test_id}_failure.png")
         try:
             driver.save_screenshot(screenshot_path)
-            logger.info(f"Screenshot saved to {screenshot_path}")
+            logger.info(f"Real screenshot saved to {screenshot_path}")
         except Exception as ss_e:
-            logger.error(f"Failed to save screenshot: {str(ss_e)}")
+            logger.error(f"Failed to capture screenshot: {str(ss_e)}")
             
     finally:
         duration = round(time.time() - start_time, 2)
-        
-        # Ensure the test actually failed if it was supposed to fail
         assert actual_status == expected_status, f"Expected {expected_status} but got {actual_status}"
         
-        # Log to Excel/HTML Reporter
-        reporter.add_result(
-            test_id, 
-            module, 
-            desc, 
-            "Action should succeed", 
-            f"Action {actual_status.lower()}", 
-            actual_status, 
-            f"{duration}s"
-        )
+        reporter.add_result(test_id, module, desc, "UI Interaction Successful", f"Interaction {actual_status}", actual_status, f"{duration}s")
