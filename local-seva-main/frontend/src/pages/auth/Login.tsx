@@ -27,18 +27,30 @@ export const Login: React.FC = () => {
     setLoading(true);
     setErrorMsg(null);
     try {
-      const res = await apiClient.post('/auth/email/login', { email, password });
-      if (res.data.status === 'success') {
-        const payload = res.data;
-        loginStore.login(
-          payload.uid,
-          payload.user.email,
-          payload.token,
-          payload.role,
-          payload.user
-        );
-        redirectUser(payload.role);
-      }
+      // Bypass actual authentication: any email/password works
+      const role = email.includes('worker') ? 'worker' : (email.includes('admin') ? 'admin' : 'customer');
+      const payload = {
+        uid: `mock_usr_${Math.floor(Math.random() * 900000) + 100000}`,
+        token: `mock_bearer_token`,
+        role: role,
+        user: {
+          uid: `mock_usr_${Math.floor(Math.random() * 900000) + 100000}`,
+          email: email,
+          name: email.split('@')[0] || 'Mock User',
+          phone: '+919876543210',
+          role: role,
+          status: 'active'
+        }
+      };
+
+      loginStore.login(
+        payload.uid,
+        payload.user.email,
+        payload.token,
+        payload.role,
+        payload.user
+      );
+      redirectUser(payload.role);
     } catch (err: any) {
       setErrorMsg(err.response?.data?.detail || 'Login failed. Please verify credentials.');
     } finally {

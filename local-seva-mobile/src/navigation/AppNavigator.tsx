@@ -35,6 +35,29 @@ import PaymentMethodsScreen from '../screens/PaymentMethodsScreen';
 import ReviewsRatingsScreen from '../screens/ReviewsRatingsScreen';
 import ChatScreen from '../screens/ChatScreen';
 
+
+// ----------------- NEW 20 MOBILE SCREENS IMPORTS -----------------
+import AboutUsScreen from '../screens/AboutUsScreen';
+import TermsConditionsScreen from '../screens/TermsConditionsScreen';
+import PrivacyPolicyScreen from '../screens/PrivacyPolicyScreen';
+import FAQScreen from '../screens/FAQScreen';
+import LoyaltyRewardsScreen from '../screens/LoyaltyRewardsScreen';
+import ReferralProgramScreen from '../screens/ReferralProgramScreen';
+import OffersPromotionsScreen from '../screens/OffersPromotionsScreen';
+import VideoConsultationScreen from '../screens/VideoConsultationScreen';
+import SavedAddressesScreen from '../screens/SavedAddressesScreen';
+import DisputeResolutionScreen from '../screens/DisputeResolutionScreen';
+import FavoritesScreen from '../screens/FavoritesScreen';
+import InvoiceHistoryScreen from '../screens/InvoiceHistoryScreen';
+import PartnerPerksScreen from '../screens/PartnerPerksScreen';
+import PerformanceMetricsScreen from '../screens/PerformanceMetricsScreen';
+import TaxComplianceScreen from '../screens/TaxComplianceScreen';
+import AdvancePayoutsScreen from '../screens/AdvancePayoutsScreen';
+import LeaderboardScreen from '../screens/LeaderboardScreen';
+import EquipmentRentalScreen from '../screens/EquipmentRentalScreen';
+import BackgroundCheckStatusScreen from '../screens/BackgroundCheckStatusScreen';
+import EmergencySOSScreen from '../screens/EmergencySOSScreen';
+
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -103,6 +126,17 @@ export default function AppNavigator() {
             <Stack.Screen name="WorkerCatalog" component={WorkerCatalogScreen} />
             <Stack.Screen name="WorkerReviews" component={WorkerReviewsScreen} />
             <Stack.Screen name="WorkerTraining" component={WorkerTrainingScreen} />
+
+            {/* NEW WORKER SCREENS */}
+            <Stack.Screen name="PartnerPerks" component={PartnerPerksScreen} />
+            <Stack.Screen name="PerformanceMetrics" component={PerformanceMetricsScreen} />
+            <Stack.Screen name="TaxCompliance" component={TaxComplianceScreen} />
+            <Stack.Screen name="AdvancePayouts" component={AdvancePayoutsScreen} />
+            <Stack.Screen name="Leaderboard" component={LeaderboardScreen} />
+            <Stack.Screen name="EquipmentRental" component={EquipmentRentalScreen} />
+            <Stack.Screen name="BackgroundCheckStatus" component={BackgroundCheckStatusScreen} />
+            <Stack.Screen name="EmergencySOS" component={EmergencySOSScreen} />
+
             {/* Common Authenticated Screens */}
             <Stack.Screen name="Settings" component={SettingsScreen} />
             <Stack.Screen name="Notifications" component={NotificationsScreen} />
@@ -116,6 +150,21 @@ export default function AppNavigator() {
             <Stack.Screen name="CustomerTabs" component={CustomerTabs} />
             <Stack.Screen name="ServiceDetail" component={ServiceDetailScreen} />
             <Stack.Screen name="MapTracking" component={MapTrackingScreen} />
+
+            {/* NEW CUSTOMER SCREENS */}
+            <Stack.Screen name="AboutUs" component={AboutUsScreen} />
+            <Stack.Screen name="TermsConditions" component={TermsConditionsScreen} />
+            <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicyScreen} />
+            <Stack.Screen name="FAQ" component={FAQScreen} />
+            <Stack.Screen name="LoyaltyRewards" component={LoyaltyRewardsScreen} />
+            <Stack.Screen name="ReferralProgram" component={ReferralProgramScreen} />
+            <Stack.Screen name="OffersPromotions" component={OffersPromotionsScreen} />
+            <Stack.Screen name="VideoConsultation" component={VideoConsultationScreen} />
+            <Stack.Screen name="SavedAddresses" component={SavedAddressesScreen} />
+            <Stack.Screen name="DisputeResolution" component={DisputeResolutionScreen} />
+            <Stack.Screen name="Favorites" component={FavoritesScreen} />
+            <Stack.Screen name="InvoiceHistory" component={InvoiceHistoryScreen} />
+
             {/* Common Authenticated Screens */}
             <Stack.Screen name="Settings" component={SettingsScreen} />
             <Stack.Screen name="Notifications" component={NotificationsScreen} />

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuthStore } from '../../stores/authStore';
-import { Mail, Lock, Phone, User, Sparkles, AlertCircle, ShieldCheck } from 'lucide-react';
+import { Mail, Lock, Phone, User, Sparkles, AlertCircle, ShieldCheck, MapPin } from 'lucide-react';
 import apiClient from '../../services/api';
 
 export const Register: React.FC = () => {
@@ -16,7 +16,8 @@ export const Register: React.FC = () => {
   
   // Worker Specific onboarding variables
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
-  const [selectedZones, setSelectedZones] = useState<string[]>([]);
+  const [locationStr, setLocationStr] = useState<string>('');
+  const [locationLoading, setLocationLoading] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -28,11 +29,27 @@ export const Register: React.FC = () => {
     { id: 'ac_servicing', name: 'AC & Appliance Repair' }
   ];
 
-  const zonesList = [
-    { id: 'chennai_core', name: 'Chennai Central Core' },
-    { id: 'omr_highway', name: 'OMR Tech Corridor' },
-    { id: 'madurai_central', name: 'Madurai Heritage Zone' }
-  ];
+  const handleGetLocation = () => {
+    setLocationLoading(true);
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const lat = position.coords.latitude;
+          const lng = position.coords.longitude;
+          setLocationStr(`${lat.toFixed(4)}, ${lng.toFixed(4)}`);
+          setLocationLoading(false);
+        },
+        (error) => {
+          console.error("Error getting location", error);
+          setLocationStr("Location access denied");
+          setLocationLoading(false);
+        }
+      );
+    } else {
+      setLocationStr("Geolocation not supported");
+      setLocationLoading(false);
+    }
+  };
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,7 +75,7 @@ export const Register: React.FC = () => {
         if (role === 'worker') {
           await apiClient.put('/users/me', {
             skills: selectedSkills,
-            serviceZones: selectedZones,
+            serviceZones: locationStr ? [locationStr] : [],
             bankDetails: {
               accountNumber: '123456789012',
               ifscCode: 'HDFC0000001',
@@ -97,12 +114,6 @@ export const Register: React.FC = () => {
   const toggleSkill = (id: string) => {
     setSelectedSkills(prev => 
       prev.includes(id) ? prev.filter(s => s !== id) : [...prev, id]
-    );
-  };
-
-  const toggleZone = (id: string) => {
-    setSelectedZones(prev => 
-      prev.includes(id) ? prev.filter(z => z !== id) : [...prev, id]
     );
   };
 
@@ -245,23 +256,23 @@ export const Register: React.FC = () => {
 
               <div className="space-y-2">
                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">
-                  Select Your Operational Zones
+                  Live Location
                 </label>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                  {zonesList.map(zone => (
-                    <button
-                      type="button"
-                      key={zone.id}
-                      onClick={() => toggleZone(zone.id)}
-                      className={`p-2.5 border rounded-xl text-left text-xs font-semibold transition-all ${
-                        selectedZones.includes(zone.id)
-                          ? 'border-primary bg-primary/10 text-primary'
-                          : 'border-slate-200 dark:border-slate-800 text-slate-500'
-                      }`}
-                    >
-                      {zone.name}
-                    </button>
-                  ))}
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={handleGetLocation}
+                    disabled={locationLoading}
+                    className="flex-1 p-2.5 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-semibold transition-all hover:bg-slate-50 dark:hover:bg-slate-800 flex items-center justify-center gap-2 text-slate-700 dark:text-slate-300"
+                  >
+                    <MapPin className="w-4 h-4 text-primary" />
+                    {locationLoading ? 'Fetching Location...' : locationStr ? 'Update Live Location' : 'Get Live Location'}
+                  </button>
+                  {locationStr && !locationLoading && (
+                    <div className="flex-1 p-2.5 bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 border border-green-200 dark:border-green-800 rounded-xl text-xs font-semibold text-center overflow-hidden text-ellipsis whitespace-nowrap">
+                      {locationStr}
+                    </div>
+                  )}
                 </div>
               </div>
 
