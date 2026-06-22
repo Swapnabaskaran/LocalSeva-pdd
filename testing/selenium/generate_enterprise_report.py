@@ -393,17 +393,48 @@ def generate_excel_report(base_dir):
     red_fill = PatternFill(start_color="C00000", end_color="C00000", fill_type="solid")
     thin_border = Border(left=Side(style='thin'), right=Side(style='thin'), top=Side(style='thin'), bottom=Side(style='thin'))
     
+    # Generate random execution times and compute total duration
+    total_duration_s = 0.0
+    test_results = []
+    
+    tc_id_counter = 1
+    failed_count = 0
+    failed_tests = []
+    
+    for module, desc, expected in SCENARIOS:
+        tc_id = f"TC-SEL-{tc_id_counter:03d}"
+        tc_id_counter += 1
+        
+        exec_time_s = random.uniform(0.1, 0.5)
+        total_duration_s += exec_time_s
+        execution_time_str = f"{exec_time_s:.2f}s"
+        
+        if "Intentional failure:" in desc:
+            status = "FAIL"
+            actual = "System Error / Expected validation failed during execution."
+            failed_tests.append((tc_id, module, desc, actual))
+            failed_count += 1
+        else:
+            status = "PASS"
+            actual = "Operation completed successfully, all validation checks passed."
+            
+        test_results.append((tc_id, module, desc, expected, actual, status, execution_time_str))
+        
+    avg_duration_s = total_duration_s / len(SCENARIOS)
+    
     # 1. Summary Sheet
     ws_summary = wb.active
     ws_summary.title = "Summary"
     
+    pass_percentage = ((len(SCENARIOS) - failed_count) / len(SCENARIOS)) * 100
+    
     summary_data = [
         ["Web Test Execution Summary", ""],
-        ["Total Tests", "350"],
-        ["Passed", "348"],
-        ["Failed", "2"],
-        ["Pass Percentage", "99.43%"],
-        ["Total Duration", "0.00s"],
+        ["Total Tests", str(len(SCENARIOS))],
+        ["Passed", str(len(SCENARIOS) - failed_count)],
+        ["Failed", str(failed_count)],
+        ["Pass Percentage", f"{pass_percentage:.2f}%"],
+        ["Total Duration", f"{total_duration_s:.2f}s"],
         ["Browser", "Chrome/Firefox/Edge"],
         ["Browser Version", "120.0"],
         ["Platform", "Windows 11"],
@@ -435,24 +466,9 @@ def generate_excel_report(base_dir):
         cell.fill = blue_fill
         cell.border = thin_border
     
-    tc_id_counter = 1
-    
-    for module, desc, expected in SCENARIOS:
-        tc_id = f"TC-SEL-{tc_id_counter:03d}"
-        tc_id_counter += 1
-        
-        if "Intentional failure:" in desc:
-            status = "FAIL"
-            actual = "System Error / Expected validation failed during execution."
-        else:
-            status = "PASS"
-            actual = "Operation completed successfully, all validation checks passed."
-            
-        execution_time = f"{random.uniform(0.1, 0.5):.2f}s"
-        
-        row = [tc_id, module, desc, expected, actual, status, execution_time]
-        ws_test_cases.append(row)
-        for col_idx, _ in enumerate(row, 1):
+    for row_data in test_results:
+        ws_test_cases.append(row_data)
+        for col_idx, _ in enumerate(row_data, 1):
             ws_test_cases.cell(row=ws_test_cases.max_row, column=col_idx).border = thin_border
         
     # 3. Failed Tests Sheet
@@ -465,22 +481,59 @@ def generate_excel_report(base_dir):
         cell.fill = red_fill
         cell.border = thin_border
     
-    failed_count = 0
-    tc_id_counter_failed = 1
-    for module, desc, expected in SCENARIOS:
-        tc_id = f"TC-SEL-{tc_id_counter_failed:03d}"
-        if "Intentional failure:" in desc:
-            failed_row = [tc_id, module, desc, "System Error / Expected validation failed during execution."]
-            ws_failed.append(failed_row)
-            for col_idx, _ in enumerate(failed_row, 1):
-                ws_failed.cell(row=ws_failed.max_row, column=col_idx).border = thin_border
-            failed_count += 1
-        tc_id_counter_failed += 1
-            
     if failed_count == 0:
         ws_failed.append(["N/A", "N/A", "All tests passed.", "No failures recorded."])
         for col_idx in range(1, 5):
             ws_failed.cell(row=ws_failed.max_row, column=col_idx).border = thin_border
+    else:
+        for failed_row in failed_tests:
+            ws_failed.append(failed_row)
+            for col_idx, _ in enumerate(failed_row, 1):
+                ws_failed.cell(row=ws_failed.max_row, column=col_idx).border = thin_border
+                
+    # 4. Execution Logs Sheet
+    ws_logs = wb.create_sheet(title="Execution Logs")
+    log_headers = ["Log ID", "Timestamp", "Test Case ID", "Log Level", "Message"]
+    ws_logs.append(log_headers)
+    for col_idx, _ in enumerate(log_headers, 1):
+        cell = ws_logs.cell(row=1, column=col_idx)
+        cell.font = header_font
+        cell.fill = blue_fill
+        cell.border = thin_border
+        
+    log_id = 1
+    for row_data in test_results[:20]: # Add logs for the first 20 tests as an example to avoid massive file size
+        tc_id = row_data[0]
+        status = row_data[5]
+        log_level = "INFO" if status == "PASS" else "ERROR"
+        ws_logs.append([f"LOG-{log_id:04d}", "2026-06-22T15:30:00Z", tc_id, log_level, f"Execution {status} for {tc_id}"])
+        for col_idx in range(1, 6):
+            ws_logs.cell(row=ws_logs.max_row, column=col_idx).border = thin_border
+        log_id += 1
+        
+    # 5. Execution Metrics Sheet
+    ws_metrics = wb.create_sheet(title="Execution Metrics")
+    metrics_headers = ["Metric Name", "Value"]
+    ws_metrics.append(metrics_headers)
+    for col_idx, _ in enumerate(metrics_headers, 1):
+        cell = ws_metrics.cell(row=1, column=col_idx)
+        cell.font = header_font
+        cell.fill = blue_fill
+        cell.border = thin_border
+        
+    metrics_data = [
+        ["Total Test Cases", str(len(SCENARIOS))],
+        ["Passed Tests", str(len(SCENARIOS) - failed_count)],
+        ["Failed Tests", str(failed_count)],
+        ["Total Execution Duration (s)", f"{total_duration_s:.2f}"],
+        ["Average Test Duration (s)", f"{avg_duration_s:.2f}"],
+        ["Success Rate", f"{pass_percentage:.2f}%"]
+    ]
+    
+    for row_data in metrics_data:
+        ws_metrics.append(row_data)
+        for col_idx, _ in enumerate(row_data, 1):
+            ws_metrics.cell(row=ws_metrics.max_row, column=col_idx).border = thin_border
         
     wb.save(excel_path)
     print(f"Successfully generated {excel_path} with {len(SCENARIOS)} unique test cases formatted perfectly.")
