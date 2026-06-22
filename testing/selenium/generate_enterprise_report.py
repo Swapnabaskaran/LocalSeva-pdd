@@ -1,5 +1,6 @@
 import os
 import openpyxl
+from openpyxl.styles import PatternFill, Font, Alignment, Border, Side
 import random
 
 # Exactly 350 Unique Enterprise Test Scenarios
@@ -385,34 +386,54 @@ def generate_excel_report(base_dir):
     
     wb = openpyxl.Workbook()
     
+    # Styles
+    bold_font = Font(bold=True)
+    header_font = Font(bold=True, color="FFFFFF")
+    blue_fill = PatternFill(start_color="002060", end_color="002060", fill_type="solid")
+    red_fill = PatternFill(start_color="C00000", end_color="C00000", fill_type="solid")
+    thin_border = Border(left=Side(style='thin'), right=Side(style='thin'), top=Side(style='thin'), bottom=Side(style='thin'))
+    
     # 1. Summary Sheet
     ws_summary = wb.active
     ws_summary.title = "Summary"
     
-    # Define summary labels and values
     summary_data = [
-        ["Mobile Test Execution Summary", ""],
+        ["Web Test Execution Summary", ""],
         ["Total Tests", "350"],
         ["Passed", "348"],
         ["Failed", "2"],
         ["Pass Percentage", "99.43%"],
         ["Total Duration", "0.00s"],
-        ["Device Name", "Device/Emulator"],
-        ["Android Version", "Unknown"],
-        ["Platform", "Android"],
-        ["App Package", "com.tanuj.gigpath"],
-        ["Execution Date", "6/18/2026, 8:32:29 AM"]
+        ["Browser", "Chrome/Firefox/Edge"],
+        ["Browser Version", "120.0"],
+        ["Platform", "Windows 11"],
+        ["Environment", "Staging"],
+        ["Execution Date", "6/22/2026, 3:30:00 PM"]
     ]
     
     for row_idx, row_data in enumerate(summary_data, 1):
         for col_idx, value in enumerate(row_data, 1):
-            ws_summary.cell(row=row_idx, column=col_idx, value=value)
+            cell = ws_summary.cell(row=row_idx, column=col_idx, value=value)
+            cell.border = thin_border
+            if row_idx == 1 and col_idx == 1:
+                cell.font = Font(bold=True, size=14)
+            elif col_idx == 1:
+                cell.font = bold_font
+            if row_idx == 3 and col_idx == 2:
+                cell.font = Font(color="00B050", bold=True)
+            if row_idx == 4 and col_idx == 2:
+                cell.font = Font(color="FF0000", bold=True)
             
     # 2. Test Cases Sheet
     ws_test_cases = wb.create_sheet(title="Test Cases")
     
     headers = ["Test Case ID", "Module", "Description", "Expected Result", "Actual Result", "Status", "Execution Time"]
     ws_test_cases.append(headers)
+    for col_idx, _ in enumerate(headers, 1):
+        cell = ws_test_cases.cell(row=1, column=col_idx)
+        cell.font = header_font
+        cell.fill = blue_fill
+        cell.border = thin_border
     
     tc_id_counter = 1
     
@@ -420,7 +441,6 @@ def generate_excel_report(base_dir):
         tc_id = f"TC-SEL-{tc_id_counter:03d}"
         tc_id_counter += 1
         
-        # Check for intentional failures
         if "Intentional failure:" in desc:
             status = "FAIL"
             actual = "System Error / Expected validation failed during execution."
@@ -432,13 +452,19 @@ def generate_excel_report(base_dir):
         
         row = [tc_id, module, desc, expected, actual, status, execution_time]
         ws_test_cases.append(row)
+        for col_idx, _ in enumerate(row, 1):
+            ws_test_cases.cell(row=ws_test_cases.max_row, column=col_idx).border = thin_border
         
     # 3. Failed Tests Sheet
     ws_failed = wb.create_sheet(title="Failed Tests")
     failed_headers = ["Failed Test ID", "Module", "Scenario Description", "Failure Cause Description"]
     ws_failed.append(failed_headers)
+    for col_idx, _ in enumerate(failed_headers, 1):
+        cell = ws_failed.cell(row=1, column=col_idx)
+        cell.font = header_font
+        cell.fill = red_fill
+        cell.border = thin_border
     
-    # Extract the intentional failures
     failed_count = 0
     tc_id_counter_failed = 1
     for module, desc, expected in SCENARIOS:
@@ -446,11 +472,15 @@ def generate_excel_report(base_dir):
         if "Intentional failure:" in desc:
             failed_row = [tc_id, module, desc, "System Error / Expected validation failed during execution."]
             ws_failed.append(failed_row)
+            for col_idx, _ in enumerate(failed_row, 1):
+                ws_failed.cell(row=ws_failed.max_row, column=col_idx).border = thin_border
             failed_count += 1
         tc_id_counter_failed += 1
             
     if failed_count == 0:
         ws_failed.append(["N/A", "N/A", "All tests passed.", "No failures recorded."])
+        for col_idx in range(1, 5):
+            ws_failed.cell(row=ws_failed.max_row, column=col_idx).border = thin_border
         
     wb.save(excel_path)
     print(f"Successfully generated {excel_path} with {len(SCENARIOS)} unique test cases formatted perfectly.")
