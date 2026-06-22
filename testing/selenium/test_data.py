@@ -104,8 +104,8 @@ def generate_unique_test_data():
     for i, (module, desc) in enumerate(data):
         test_id = f"TC-SEL-{i+1:03d}"
         
-        # Explicit fail for 298 and 299 as requested
-        expected = "Failed" if test_id in ["TC-SEL-298", "TC-SEL-299"] else "Passed"
+        # Explicit fail for 299 as requested
+        expected = "Failed" if test_id in ["TC-SEL-299"] else "Passed"
         
         final_data.append((test_id, module, desc, expected))
         
