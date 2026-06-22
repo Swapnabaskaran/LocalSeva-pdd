@@ -379,7 +379,9 @@ SCENARIOS = [
 ]
 
 def generate_excel_report(base_dir):
-    excel_path = os.path.join(base_dir, "Selenium_Report.xlsx")
+    reports_dir = os.path.join(base_dir, "reports")
+    os.makedirs(reports_dir, exist_ok=True)
+    excel_path = os.path.join(reports_dir, "Selenium_Report.xlsx")
     
     wb = openpyxl.Workbook()
     
@@ -536,4 +538,6 @@ def generate_excel_report(base_dir):
     print(f"Successfully generated {excel_path} with {len(SCENARIOS)} unique test cases formatted perfectly.")
 
 if __name__ == "__main__":
-    generate_excel_report(r"c:/Users/HP/Downloads/localseva/testing")
+    import os
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    generate_excel_report(current_dir)

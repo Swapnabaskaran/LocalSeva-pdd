@@ -27,6 +27,17 @@ jobs:
     - name: Build and Test with Maven
       run: mvn clean test -f testing/selenium/pom.xml || true
       
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        
+    - name: Generate Beautiful Enterprise Report
+      run: |
+        pip install openpyxl pandas
+        cd testing/selenium
+        python generate_enterprise_report.py
+        
     - name: Upload Report Artifacts
       uses: actions/upload-artifact@v4
       with:
