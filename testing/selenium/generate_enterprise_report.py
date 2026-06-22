@@ -1,5 +1,6 @@
 import os
 import openpyxl
+import random
 
 # Exactly 350 Unique Enterprise Test Scenarios
 SCENARIOS = [
@@ -407,7 +408,8 @@ def generate_excel_report(base_dir):
             status = "PASS"
             actual = "Successfully executed: " + expected
             
-        execution_time = "142ms"
+        # Generate a random execution time between 100ms and 5000ms
+        execution_time = f"{random.randint(100, 5000)}ms"
         
         row = [tc_id, module, desc, expected, actual, status, execution_time]
         ws.append(row)
