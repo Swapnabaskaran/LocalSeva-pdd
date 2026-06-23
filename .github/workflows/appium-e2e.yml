@@ -48,6 +48,11 @@ jobs:
         cd testing/appium
         mvn clean test
 
+    - name: Generate Beautiful Enterprise Report
+      run: |
+        cd testing/appium
+        python generate_appium_enterprise_report.py
+
     - name: Upload Extent & Excel Reports
       uses: actions/upload-artifact@v4
       if: always()
